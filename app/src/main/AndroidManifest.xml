@@ -24,6 +24,8 @@
         <provider
             android:authorities="apps.sumesh.android.a7_day_forecast"
             android:name=".WeatherProvider"
+            android:enabled="true"
+            android:exported="true"
             />
     </application>
 

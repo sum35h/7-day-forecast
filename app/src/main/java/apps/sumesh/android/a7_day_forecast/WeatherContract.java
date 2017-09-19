@@ -6,6 +6,10 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.format.Time;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * Created by Sumesh on 13-05-2017.
  */
@@ -39,7 +43,14 @@ public class WeatherContract {
         int julianDay = Time.getJulianDay(startDate, time.gmtoff);
         return time.setJulianDay(julianDay);
     }
+    public static long getDateDB()
+    {
+        GregorianCalendar gc = new GregorianCalendar();
 
+        Date time = gc.getTime();
+        SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("yyyyMMdd");
+        return Long.parseLong(shortenedDateFormat.format(time)) ;
+    }
     /* Inner class that defines the table contents of the location table */
     public static final class LocationEntry implements BaseColumns {
 
@@ -127,12 +138,16 @@ public class WeatherContract {
                 String locationSetting, long startDate) {
             long normalizedDate = normalizeDate(startDate);
             return CONTENT_URI.buildUpon().appendPath(locationSetting)
-                    .appendQueryParameter(COLUMN_DATE, Long.toString(normalizedDate)).build();
+                   .appendQueryParameter(COLUMN_DATE, Long.toString(normalizedDate)).build();
+           // return CONTENT_URI.buildUpon().appendPath(locationSetting)
+                  //  .appendQueryParameter(COLUMN_DATE, startDate).build();
         }
 
         public static Uri buildWeatherLocationWithDate(String locationSetting, long date) {
             return CONTENT_URI.buildUpon().appendPath(locationSetting)
                     .appendPath(Long.toString(normalizeDate(date))).build();
+           // return CONTENT_URI.buildUpon().appendPath(locationSetting)
+                 //   .appendPath(date).build();
         }
 
         public static String getLocationSettingFromUri(Uri uri) {
@@ -150,5 +165,6 @@ public class WeatherContract {
             else
                 return 0;
         }
+
     }
 }
