@@ -199,7 +199,9 @@ public class WeatherProvider extends ContentProvider{
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
+        Log.d("weatherprovider","insert");
 
+        Log.d("WeatherProvider"," olaloal");
         switch (match) {
             case WEATHER: {
                // normalizeDate(values);
@@ -208,6 +210,7 @@ public class WeatherProvider extends ContentProvider{
                     returnUri = WeatherContract.WeatherEntry.buildWeatherUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
+                Log.d("WeatherProvider"," _id="+_id+" returnUri="+returnUri);
                 break;
             }
             case LOCATION: {
@@ -231,6 +234,8 @@ public class WeatherProvider extends ContentProvider{
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
+        Log.d("weatherprovider","delete");
+
         // this makes delete all rows return the number of rows deleted
         if ( null == selection ) selection = "1";
         switch (match) {
@@ -257,6 +262,7 @@ public class WeatherProvider extends ContentProvider{
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsUpdated;
+        Log.d("weatherprovider","update");
 
         switch (match) {
             case WEATHER:
@@ -278,6 +284,7 @@ public class WeatherProvider extends ContentProvider{
     }
     @Override
     public int bulkInsert(Uri uri, ContentValues[] values) {
+        Log.d("weatherprovider","bulkinsert");
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         switch (match) {
